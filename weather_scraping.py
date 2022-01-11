@@ -6,6 +6,7 @@ import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import json
 
 #Using Selenium without launching the browser (headless).
 chrome_options = Options()
@@ -39,5 +40,11 @@ print(tod.text)
 temp = bs.find("span", {"class": "CurrentConditions--tempValue--3a50n"})
 print(temp.text)
 
+#Create the list of dictionary
+result = [{'Location': city.text, 'Time': tod.text, 'Temperature': temp.text}]
+    
+with open("weather.json", "w") as f:
+    #Write it to file
+    json.dump(result, f, indent = 2)
     
 driver.close()
